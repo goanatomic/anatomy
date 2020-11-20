@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<!-- Begins HTML document -->
+
+<cms:block 'pre'>
+
+	<!-- Pulls in core Anatomy variables -->
+	<cms:embed 'anatomy/vars.html' />
+	<cms:php>include('embed/anatomy/vars.php');</cms:php>
+
+	<!-- Pulls in client variables -->
+	<cms:embed 'client/vars.html' />
+	<cms:php>include('embed/client/vars.php');</cms:php>
+
+	<!-- Sets user timezone -->
+	<cms:embed 'anatomy/timezone.html' />
+
+</cms:block>
+
+<!-- Once the template has been established, the first time it's visited, this checks out the required Couch page, sets it to unpublished, and names it 'default' to hide in admin panel -->
+<cms:if t_clonable = '1'>
+	<cms:pages masterpage=k_template_name page_name='default' show_unpublished='1' order='asc' skip_custom_fields='1'>
+		<cms:no_results>
+			<cms:pages masterpage=k_template_name order='asc' limit='1' skip_custom_fields='1'>
+				<cms:db_persist
+					_masterpage = k_template_name
+					_page_id = k_page_id
+					_mode = 'edit'
+					k_publish_date = "0000-00-00 00:00:00"
+					k_page_name = 'default'
+				/>
+				<cms:redirect url=a_page_link />
+			</cms:pages>
+		</cms:no_results>
+	</cms:pages>
+</cms:if>
+
+<html lang="<cms:show s_lang />" <cms:block 'html-attr' />>
+
+	<cms:block 'head'>
+
+		<head>
+			
+			<!-- Web fonts -->
+			<cms:block 'web-fonts'>
+				<link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+			</cms:block>
+
+			<!-- Favicons -->
+			<cms:block 'icons'>
+				<link rel="icon" type="image/png" href="<cms:show a_favicon />" />
+				<link rel="apple-touch-icon" href="<cms:show a_favicon />" />
+			</cms:block>
+
+			<!-- Meta tags -->
+			<cms:block 'meta'>
+				<meta charset="UTF-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<title><cms:show seo_title /></title>
+				<meta name="description" content="<cms:show seo_desc />"/>
+				<meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+				<link rel="canonical" href="<cms:show k_site_url />" />
+			</cms:block>
+
+			<!-- Open Graph -->
+			<cms:block 'open-graph'>
+				<meta property="og:locale" content="<cms:show og_locale />" />
+				<meta property="og:type" content="<cms:show og_type />" />
+				<meta property="og:title" content="<cms:show seo_title />" />
+				<meta property="og:description" content="<cms:show seo_desc />" />
+				<meta property="og:url" content="<cms:show k_site_url />" />
+				<meta property="og:site_name" content="<cms:show site_name />" />
+				<meta property="og:image" content="<cms:show site_image />" />
+			</cms:block>
+
+			<cms:block 'twitter-card'>
+				<meta name="twitter:card" content="summary" />
+				<meta name="twitter:description" content="<cms:show seo_desc />" />
+				<meta name="twitter:title" content="<cms:show seo_title />" />
+				<meta name="twitter:site" content="<cms:show twitter_handle />" />
+				<meta name="twitter:image" content="<cms:show site_image />" />
+				<meta name="twitter:creator" content="<cms:show twitter_handle />" />
+			</cms:block>
+
+			<!-- CSS -->
+			<cms:block 'css-link'>
+				<cms:minify 'css' into=s_css_path>
+					embed/anatomy/css/vars.css
+					embed/anatomy/css/typography.css
+					embed/anatomy/css/base.css
+					embed/anatomy/css/layout.css
+					embed/anatomy/css/modules.css
+				</cms:minify>
+			</cms:block>
+
+			<!-- Style with access to Couch vars -->
+			<style>
+				<cms:block 't-css'>
+					<cms:embed "templates/<cms:show a_template_basename />/<cms:show a_template_basename />.css" />
+				</cms:block>
+				<cms:block 'v-css' />
+			</style>
+
+		</head>
+
+	</cms:block>
+
+	<body <cms:block 'body-attr' />>
+
+		<cms:block 'header'><cms:embed 'client/layout/header.html' /></cms:block>
+		<cms:block 'main' />
+		<cms:block 'footer'><cms:embed 'client/layout/footer.html' /></cms:block>
+		<cms:block 'post' />
+
+	</body>
+
+
+	<!-- Include page scripts (with access couch vars) -->
+	<cms:block 'a-scripts'>
+		<script>
+			<cms:embed "anatomy/js/anatomy.js" />
+		</script>
+	</cms:block>
+
+
+	<!-- Include page scripts (with access couch vars) -->
+	<cms:block 't-scripts'>
+		<script>
+			<cms:embed "templates/<cms:show a_template_basename />/<cms:show a_template_basename />.js" />
+		</script>
+	</cms:block>
+
+
+	<!-- Include view scripts (with access couch vars) -->
+	<cms:block 'v-scripts' />
+
+
+</html>

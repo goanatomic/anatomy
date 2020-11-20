@@ -1,0 +1,9 @@
+<cms:block 'base-routes'>
+	<cms:route name='list' path='' />
+	<cms:route name='show' path='{:id}' filters='page_exists' />
+	<cms:route name='create' path='create' />
+	<cms:route name='edit' path='edit/{:id}' filters='page_exists' />
+	<cms:route name='delete' path='delete/{:id}' filters='page_exists' />
+</cms:block>
+
+<cms:block 'client-routes'></cms:block>

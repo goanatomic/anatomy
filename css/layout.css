@@ -1,0 +1,175 @@
+/* ----------------------- HEADER ----------------------- */
+
+.topbar {
+	position: sticky;
+	top: 0;
+	width: 100vw;
+	height: 60px;
+	box-sizing: border-box;
+	padding: 0 5vw;
+	display: flex;
+	justify-content: space-between;
+	background: white;
+	box-shadow: 0 0 10px rgba(0,0,0,0.2);
+	z-index: 99;
+}
+
+	.topbar header {
+		padding: 0;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.topbar .site-logo {
+		height: 50px;
+	}
+
+	.topbar .site-nav {
+		z-index: 999;
+	}
+
+	.topbar .site-title {
+		flex-grow: 2;
+	}
+
+	.topbar .site-title a {
+		color: inherit;
+	}
+
+
+
+	.topbar .nav-toggles {
+		display: flex;
+		position: relative;
+		width: 20px;
+		height: 20px;
+		overflow: hidden;
+	}
+
+		.topbar .nav-toggle {
+			position: absolute;
+			left: 40px;
+			transition: 0.2s ease;
+			cursor: pointer;
+			opacity: 0;
+		} .topbar .nav-toggle.active {
+			left: 0;
+			opacity: 1;
+		}
+
+			.topbar .nav-toggle svg.i {
+				height: 20px;
+				width: 20px;
+			}
+
+				.topbar .nav-toggles .i use {
+					fill: var(--dark);
+				}
+
+
+
+.topbar .site-nav {
+	left: 100vw;
+	transition: 0.2s ease;
+	height: calc(100vh - 50px);
+	top: 50px;
+	position: fixed;
+	width: 100vw;
+	background: white;
+	padding: 10px 5%;
+	box-sizing: border-box;
+	z-index: 99;
+} .topbar .site-nav.active {
+	left: 0;
+}
+
+	.topbar .site-nav .site-links {
+		display: flex;
+		flex-direction: column;
+		list-style-type: none;
+		text-align: right;
+	}
+
+
+
+
+
+
+
+
+main {
+	width: 90vw;
+	max-width: 1200px;
+	margin: 24px auto;
+}
+
+
+
+
+
+
+
+/* Content area */
+.content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+} @media screen and (min-width: 800px) {
+	.content {
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+}
+
+	.content__main {
+		width: 100%;
+		order: 0;
+		overflow-wrap: break-word;
+	} @media screen and (min-width: 800px) {
+		.content__main {
+			width: 45%;
+		}
+	}
+
+	.content__image {
+		width: 100%;
+		order: -1;
+	} @media screen and (min-width: 800px) {
+		.content__image {
+			order: 1;
+			width: 50%;
+			height: 100%;
+			position: sticky;
+			position: -webkit-sticky;
+			top: 60px;
+		}
+	}
+
+
+
+
+
+
+
+
+/* ----------------------- MAIN ----------------------- */
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box; }
+  @media (min-width: 400px) {
+	  .container {
+	    width: 85%;
+	    padding: 0; }
+	}
+	@media (min-width: 550px) {
+	  .container {
+	    width: 80%;
+	}
+}

@@ -1,0 +1,33 @@
+<cms:func 'template' title='' clonable='' order='' icon='document' dynamic_folders='' folder_masterpage='' routable='1' debug='0' seo='' noindex='' config_list='' config_form='' exclude='default' hidden='' access_level='' gallery='' nested_pages='' globals='0' parent='' executable='' commentable='' order='0' routable='1' searchable='1' limit='40'>
+	<cms:set t_title = title scope = 'global' />
+	<cms:set t_clonable = clonable scope = 'global' />
+	<cms:set t_access_level = access_level scope = 'global' />
+	<cms:set t_executable = executable scope = 'global' />
+	<cms:set t_hidden = hidden scope = 'global' />
+	<cms:set t_commentable = commentable scope = 'global' />
+	<cms:set t_order = order scope = 'global' />
+	<cms:set t_icon = icon scope = 'global' />
+	<cms:set t_routable = routable scope = 'global' />
+	<cms:set t_dynamic_folders = dynamic_folders scope = 'global' />
+	<cms:set t_folder_masterpage = folder_masterpage scope = 'global' />
+	<cms:set t_gallery = gallery scope = 'global' />
+	<cms:set t_nested_pages = nested_pages scope = 'global' />
+	<cms:set t_globals = globals scope = 'global' />
+	<cms:set t_parent = parent scope = 'global' />
+	<cms:set t_config_list = config_list scope = 'global' />
+	<cms:if t_clonable><cms:set t_seo = '1' scope = 'global' /></cms:if>
+	<cms:set t_exclude = exclude scope = 'global' />
+	<cms:set t_searchable = searchable scope = 'global' />
+	<cms:set t_limit = limit scope = 'global' />
+	<cms:set t_debug = debug scope = 'global' />
+	<cms:set t_seo = seo scope = 'global' />
+	<cms:set t_noindex = noindex scope = 'global' />
+</cms:func>
+
+
+
+
+<cms:func 'view'>
+	<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" />
+	<cms:embed "templates/<cms:show a_template_basename />/views/<cms:show k_matched_route />.html" />
+</cms:func>

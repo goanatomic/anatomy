@@ -1,0 +1,82 @@
+:root {
+	--hue--caution: 50;
+	--hue--danger: 0;
+	--hue--info: 200;
+
+	--amazonite: hsl(167, 65%, 55%);
+	--amazonite-light: hsl(167, 65%, 65%);
+
+	--ruby: hsl(360, 76%, 50%);
+	--ruby-light: hsl(360, 76%, 60%);
+
+	--amber: hsl(24, 100%, 49%);
+	--amber-light: hsl(24, 100%, 59%);
+
+	--citrine: hsl(44, 100%, 48%);
+	--citrine-light: hsl(44, 100%, 58%);
+
+	--emerald: hsl(89, 100%, 42%);
+	--emerald-light: hsl(89, 100%, 52%);
+
+	--apatite: hsl(197, 100%, 60%);
+	--apatite-light: hsl(197, 100%, 70%);
+
+	--sapphire: hsl(206, 100%, 50%);
+	--sapphire-light: hsl(206, 100%, 60%);
+
+	--iolite: hsl(253, 100%, 61%);
+	--iolite-light: hsl(253, 100%, 71%);
+
+	--amethyst: hsl(287, 76%, 50%);
+	--amethyst-light: hsl(287, 76%, 60%);
+
+
+	--garnet: hsl(360, 100%, 32%);
+	--garnet-light: hsl(360, 100%, 42%);
+
+	--copper: hsl(30, 100%, 44%);
+	--copper-light: hsl(30, 100%, 54%);
+
+	--sun: hsl(55, 100%, 66%);
+	--sun-light: hsl(55, 100%, 76%);
+
+	--forest: hsl(90, 100%, 20%);
+	--forest-light: hsl(90, 100%, 30%);
+
+	--ocean: hsl(176, 95%, 35%);
+	--ocean-light: hsl(176, 95%, 45%);
+
+	--blue-hour: hsl(210, 40%, 50%);
+	--blue-hour-light: hsl(210, 40%, 60%);
+
+	--sky: hsl(206, 100%, 85%);
+	--sky-light: hsl(206, 100%, 93%);
+
+	--haze: hsl(253, 60%, 73%);
+	--haze-light: hsl(253, 60%, 83%);
+
+	--purple: hsl(287, 100%, 31%);
+	--purple-light: hsl(287, 100%, 41%);
+
+
+	--black: hsl(213, 5%, 0%);
+	--offblack: hsl(213, 5%, 3%);
+	--dark: hsl(213, 5%, 10%);
+	--gray: hsl(213, 5%, 20%);
+	--graphite: hsl(213, 5%, 35%);
+	--mid-tone: hsl(0, 0%, 42%);
+	--mid: hsl(0, 0%, 50%);
+	--mid-light: hsl(0, 0%, 65%);
+	--metal: hsl(213, 5%, 85%);
+	--metal--light: hsl(213, 5%, 94%);
+	--cloud: hsl(60, 5%, 90%);
+	--offwhite: hsl(60, 5%, 98%);
+	--white: hsl(60, 5%, 100%);
+
+	--caution: hsl(var(--hue--caution), 80%, 90%);
+	--danger: hsl(var(--hue--danger), 80%, 90%);
+	--info: hsl(var(--hue--info), 80%, 90%);
+
+	--shadow: rgba(0, 0, 0, 0.2);
+	--shadow--faint: rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,48 @@
+<cms:block 'content' />
+
+<cms:block 'debug-tools'>
+	<cms:if a_debug>
+		<div class="cms-debug">
+			<cms:dump_all />
+		</div>
+	</cms:if>
+</cms:block>
+
+<cms:block 'scripts'>
+
+	<script type='text/javascript'>
+
+	    var youtube = document.querySelectorAll( ".youtube" );
+	    
+	    for (var i = 0; i < youtube.length; i++) {
+	        
+	        var source = "https://img.youtube.com/vi/"+ youtube[i].dataset.embed +"/sddefault.jpg";
+	        
+	        var image = new Image();
+	                image.src = source;
+	                image.addEventListener( "load", function() {
+	                    youtube[ i ].appendChild( image );
+	                }( i ) );
+	    
+	                youtube[i].addEventListener( "click", function() {
+
+	                    var iframe = document.createElement( "iframe" );
+
+	                            iframe.setAttribute( "frameborder", "0" );
+	                            iframe.setAttribute( "allowfullscreen", "" );
+	                            iframe.setAttribute( "src", "https://www.youtube.com/embed/"+ this.dataset.embed +"?rel=0&showinfo=0&autoplay=1&mute=1&enablejsapi=1" );
+
+	                            this.innerHTML = "";
+	                            this.appendChild( iframe );
+	                } );    
+	    };	
+	</script>
+
+</cms:block>
+
+
+<cms:block 'template-js'>
+	<script>
+		<cms:embed "templates/<cms:show a_template_basename />/<cms:show a_template_basename />.js" />
+	</script>
+</cms:block>

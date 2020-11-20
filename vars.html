@@ -1,0 +1,31 @@
+<!-- TIME & DATE -->
+<!-- Set client timezone -->
+<cms:set s_current_dotdate = "<cms:date format='m.d.Y' />" scope = 'global' />
+<cms:set s_current_date = "<cms:date format='Y-m-d' />" scope = 'global' />
+<cms:set s_current_datetime = "<cms:date format='Y-m-d H:i:s' />" scope = 'global' />
+<cms:set s_current_weekday = "<cms:date format='l' />" scope = 'global' />
+<cms:set s_current_month = "<cms:date format='F' />" scope = 'global' />
+<cms:set s_current_hour = "<cms:date format='H' />" scope = 'global' />
+<cms:set s_current_time = "<cms:date format='g:i A' />" scope = 'global' />
+<cms:set s_current_timeframe = "<cms:if s_current_hour lt '4'>night<cms:else_if s_current_hour lt '12' /><cms:else_if s_current_hour lt '18' />afternoon<cms:else_if s_current_hour lt '21' />evening<cms:else />night</cms:if>" scope = 'global' />
+
+<!-- Check for user timezone -->
+<cms:set u_gmt_offset = "<cms:get_cookie 'u_gmt_offset' />" />
+
+<cms:set a_todate = "<cms:date format='Y-m-d' gmt=u_gmt_offset />" scope = 'global' /> <!-- will be deprecated -->
+<cms:set a_todatime = "<cms:date format='Y-m-d H:i:s' gmt=u_gmt_offset />" scope = 'global' /> <!-- will be deprecated -->
+
+<!-- Set template vars -->
+<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" scope = 'global' />
+
+<!-- Sets site settings -->
+<cms:pages masterpage = 'settings.php'>
+	<cms:set a_site_name = site_name scope = 'global' />
+	<cms:set a_site_desc = site_desc scope = 'global' />
+	<cms:set a_favicon = "<cms:thumbnail favicon width='42' height='42' quality='80' />" scope = 'global' />
+	<cms:set a_logo = "<cms:thumbnail logo width='500' quality='80' />" scope = 'global' />
+</cms:pages>
+
+<cms:set s_lang = "EN" scope = 'global' />
+<cms:set s_dev_mode = "0" scope = 'global' />
+<cms:set s_css_path = "assets/css/0.0.1.min.css" scope = 'global' />

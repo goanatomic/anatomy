@@ -1,0 +1,40 @@
+<!-- Set user timezone -->
+<cms:set u_gmt_offset = "<cms:get_cookie 'u_gmt_offset' />" scope = 'global' />
+
+<cms:if "<cms:not_empty u_gmt_offset />">
+
+	<cms:set u_current_dotdate = "<cms:date "<cms:show u_gmt_offset /> hours" gmt='1' format='m.d.Y' />" scope = 'global' />
+	<cms:set u_current_date = "<cms:date "<cms:show u_gmt_offset /> hours" gmt='1' format='Y-m-d' />" scope = 'global' />
+	<cms:set u_current_datetime = "<cms:date "<cms:show u_gmt_offset /> hours" gmt='1' format='Y-m-d H:i:s' />" scope = 'global' />
+	<cms:set u_current_weekday = "<cms:date "<cms:show u_gmt_offset /> hours" gmt='1' format='l' />" scope = 'global' />
+	<cms:set u_current_month = "<cms:date "<cms:show u_gmt_offset /> hours" gmt='1' format='F' />" scope = 'global' />
+	<cms:set u_current_hour = "<cms:date "<cms:show u_gmt_offset /> hours" gmt='1' format='H' />" scope = 'global' />
+	<cms:set u_current_time = "<cms:date "<cms:show u_gmt_offset /> hours" gmt='1' format='g:i A' />" scope = 'global' />
+	<cms:set u_current_timeframe = "<cms:if u_current_hour lt '4'>night<cms:else_if u_current_hour lt '12' /><cms:else_if u_current_hour lt '18' />afternoon<cms:else_if u_current_hour lt '21' />evening<cms:else />night</cms:if>" scope = 'global' />
+
+<cms:else />
+
+	<cms:form method='post' anchor='0' id='u_timezone_form'>
+		
+		<cms:if k_success>
+			<cms:set_cookie name='u_gmt_offset' value=frm_u_timezone_field expire='10800' />
+			<cms:redirect a_current_link />
+		</cms:if>
+
+		<cms:input name='u_timezone_field' type='text' style='display: none;' />
+
+	</cms:form>
+
+	<script type='text/javascript'>
+		function getGMTOffset() {
+			function z(n) {return (n<10? '0' : '') + n}
+			var offset = new Date().getTimezoneOffset();
+			var sign = offset < 0? '+' : '-';
+			offset = Math.abs(offset);
+			return (sign + z(offset/60 | 0) + z(offset%60)) / 100;
+		}
+		document.getElementById('u_timezone_field').value = getGMTOffset();
+		document.getElementById('u_timezone_form').submit();
+	</script>
+
+</cms:if>
