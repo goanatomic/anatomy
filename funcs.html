@@ -439,3 +439,10 @@
 	</cms:mosaic>
 
 </cms:func>
+
+
+
+
+<cms:func 'tokbox-embed' room=''>
+	<div id="otEmbedContainer" class="a-tokbox-embed"></div><script src="https://tokbox.com/embed/embed/ot-embed.js?embedId=<cms:php>echo(K_TOKBOX_EMBED_ID);</cms:php>&room=<cms:show room />"></script>
+</cms:func>

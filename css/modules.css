@@ -1,3 +1,10 @@
+.a-tokbox-embed {
+    width: 100%;
+    padding-bottom: 52.6%;
+    box-sizing: border-box;
+}
+
+
 .iframer {
 	position: relative;
 	width: 100%;
