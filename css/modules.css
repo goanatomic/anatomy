@@ -1,6 +1,8 @@
 .a-tokbox-embed {
     width: 100%;
-    padding-bottom: 52.6%;
+    height: 100%;
+    max-width: 600px;
+    max-height: 400px;
     box-sizing: border-box;
 }
 
