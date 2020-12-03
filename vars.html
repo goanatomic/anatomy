@@ -1,3 +1,16 @@
+<!-- GPC Variables -->
+<cms:php>
+	global $CTX;
+	$key_array = [];
+	foreach($_GET as $key => $value) {
+		array_push($key_array, filter_var($key, FILTER_SANITIZE_STRING));
+	}
+	$CTX->set('key_array', $key_array);
+</cms:php>
+<cms:each key_array>
+	<cms:put "gpc_<cms:show item />" "<cms:gpc item />" 'global' />
+</cms:each>
+
 <!-- TIME & DATE -->
 <!-- Set client timezone -->
 <cms:set s_current_dotdate = "<cms:date format='m.d.Y' />" scope = 'global' />
