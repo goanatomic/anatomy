@@ -42,3 +42,44 @@
 <cms:set s_lang = "EN" scope = 'global' />
 <cms:set s_dev_mode = "0" scope = 'global' />
 <cms:set s_css_path = "assets/css/0.0.1.min.css" scope = 'global' />
+
+<!-- Set acc_ variables -->
+<cms:if k_logged_in>
+	<!-- Check that user addon is active -->
+	<cms:if k_user_template>
+		<cms:pages masterpage=k_user_template id=k_user_id limit='1'>
+			<cms:capture into = 'a_account' is_json = '1' scope = 'global'>
+				{
+					"id" : "<cms:show k_page_id />",
+					"page_name" : "<cms:show k_page_name />",
+					"email" : "<cms:show extended_user_email />",
+					"phone" : "<cms:show phone />",
+					<cms:related_pages 'account_holder' limit='1'>
+						"holder" : {
+							"first_name" : "<cms:show first_name />",
+							"last_name" : "<cms:show last_name />",
+							"id" : "<cms:show k_page_id />",
+							"page_name" : "<cms:show k_page_name />"
+						},
+					"members" : [
+						{
+							"first_name" : "<cms:show first_name />",
+							"last_name" : "<cms:show last_name />",
+							"id" : "<cms:show k_page_id />",
+							"page_name" : "<cms:show k_page_name />"
+						}
+					</cms:related_pages>
+						<cms:related_pages 'members'>
+							,{
+								"first_name" : "<cms:show first_name />",
+								"last_name" : "<cms:show last_name />",
+								"id" : "<cms:show k_page_id />",
+								"page_name" : "<cms:show k_page_name />"
+							}
+						</cms:related_pages>
+					]
+				}
+			</cms:capture>
+		</cms:pages>
+	</cms:if>
+</cms:if>
