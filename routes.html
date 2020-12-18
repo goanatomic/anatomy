@@ -1,9 +1,21 @@
-<cms:block 'base-routes'>
-	<cms:route name='list' path='' />
-	<cms:route name='show' path='{:id}' filters='page_exists' />
-	<cms:route name='create' path='create' />
-	<cms:route name='edit' path='edit/{:id}' filters='page_exists' />
-	<cms:route name='delete' path='delete/{:id}' filters='page_exists' />
-</cms:block>
+<cms:route name='list' path='' />
 
-<cms:block 'client-routes'></cms:block>
+<cms:route name='show' path='{:id}' filters='page_exists'>
+	<cms:route_validators
+        id='non_zero_integer'
+    />
+</cms:route>
+
+<cms:route name='create' path='create' filters='logged-in' />
+
+<cms:route name='edit' path='edit/{:id}' filters='page_exists'>
+	<cms:route_validators
+        id='non_zero_integer'
+    />
+</cms:route>
+
+<cms:route name='delete' path='delete/{:id}' filters='page_exists'>
+	<cms:route_validators
+        id='non_zero_integer'
+    />
+</cms:route>
