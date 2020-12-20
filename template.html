@@ -5,8 +5,6 @@
 <!-- Overrides default template vars -->
 <cms:block 'set-template' />
 
-<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" scope = 'global' />
-
 <cms:template title=t_title clonable=t_clonable access_level=t_access_level executable=t_executable hidden=t_hidden commentable=t_commentable order=t_order icon=t_icon routable=t_routable dynamic_folders=t_dynamic_folders folder_masterpage=t_folder_masterpage gallery=t_gallery nested_pages=t_nested_pages globals=t_globals parent=t_parent>
 
 	<!-- Editables -->
@@ -56,22 +54,30 @@
 				#k_page_name {max-width: 400px;}
 			</cms:style>
 		</cms:config_form_view>
+
 	</cms:block>
 
-	<!-- Routes -->
+	<!-- Define Anatomy routes -->
 	<cms:embed 'anatomy/routes.html' />
+	<!-- Define Client routes -->
 	<cms:embed "templates/<cms:show a_template_basename />/routes.html" />
 
 </cms:template>
 
 <cms:block 'template-vars'>
+	<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" scope = 'global' />
 	<cms:if t_clonable>
 		<cms:set seo_postfix = k_template_title />
 	</cms:if>
 	<cms:set seo_title = "<cms:show seo_prefix /> | <cms:show seo_postfix />" />
 </cms:block>
 
-<cms:match_route debug='1' />
+<cms:block 'pre-route'>
+	<cms:embed 'anatomy/root-vars.html' />
+	<cms:embed 'client/root-vars.html' />
+</cms:block>
+
+<cms:match_route debug=d_debug />
 
 <cms:block 'view'>
 	<cms:embed "templates/<cms:show a_template_basename />/views/<cms:show k_matched_route />.html" />

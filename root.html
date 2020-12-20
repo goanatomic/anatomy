@@ -2,7 +2,7 @@
 
 <!-- Begins HTML document -->
 
-<cms:block 'pre'>
+<cms:block 'pre-html'>
 
 	<!-- Pulls in core Anatomy variables -->
 	<cms:embed 'anatomy/vars.html' />
@@ -82,6 +82,12 @@
 				<meta name="twitter:creator" content="<cms:show twitter_handle />" />
 			</cms:block>
 
+			<cms:block 'ha-js'>
+				<script type='text/javascript'>
+					<cms:embed 'anatomy/js/anatomy-head.js' />
+				</script>
+			</cms:block>
+
 			<!-- CSS -->
 			<cms:block 'css-link'>
 				<cms:minify 'css' into=s_css_path>
@@ -105,14 +111,19 @@
 
 	</cms:block>
 
+	<cms:block 'pre-body' />
+
 	<body <cms:block 'body-attr' />>
 
+		<cms:block 'pre-header' />
 		<cms:block 'header'><cms:embed 'client/layout/header.html' /></cms:block>
 		<cms:block 'main' />
 		<cms:block 'footer'><cms:embed 'client/layout/footer.html' /></cms:block>
-		<cms:block 'post' />
+		<cms:block 'post-footer' />
 
 	</body>
+
+	<cms:block 'post-body' />
 
 
 	<!-- Include page scripts (with access couch vars) -->
