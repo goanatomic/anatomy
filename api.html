@@ -1,0 +1,43 @@
+<cms:content_type 'application/json'/>
+
+<cms:embed 'anatomy/root-vars.html' />
+<cms:embed 'client/root-vars.html' />
+
+<cms:template
+	title = 'API'
+	routable = '1'
+>
+
+	<cms:embed 'anatomy/api-routes.html' />
+
+</cms:template>
+
+<cms:match_route debug=d_debug />
+
+<cms:if k_user_acces_level ge '10'>
+
+	<cms:if k_matched_route = 'list'>
+
+		{
+			"pages" : [
+				<cms:pages masterpage="<cms:show rt_template />.php">
+					{
+						"id" : "<cms:show k_page_id />",
+						"page_title" : "<cms:show k_page_title />"
+					}<cms:if k_paginated_bottom><cms:else />,</cms:if>
+				</cms:pages>
+			]
+		}
+
+	<cms:else_if k_matched_route = 'show' />
+
+		{
+			<cms:pages masterpage="<cms:show rt_template />.php" id=rt_id>
+					"id" : "<cms:show k_page_id />",
+					"page_title" : "<cms:show k_page_title />"
+			</cms:pages>
+		}
+
+	</cms:if>
+
+</cms:if>
