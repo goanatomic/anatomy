@@ -2,6 +2,8 @@
 
 <cms:embed 'anatomy/funcs.html' />
 
+<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" scope = 'global' />
+
 <!-- Overrides default template vars -->
 <cms:block 'set-template' />
 
@@ -65,7 +67,6 @@
 </cms:template>
 
 <cms:block 'template-vars'>
-	<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" scope = 'global' />
 	<cms:if t_clonable>
 		<cms:set seo_postfix = k_template_title />
 	</cms:if>
@@ -77,7 +78,7 @@
 	<cms:embed 'client/root-vars.html' />
 </cms:block>
 
-<cms:match_route debug=d_debug />
+<cms:match_route debug=config.route_debug />
 
 <cms:block 'view'>
 	<cms:embed "templates/<cms:show a_template_basename />/views/<cms:show k_matched_route />.html" />
