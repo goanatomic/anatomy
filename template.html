@@ -1,18 +1,28 @@
 <cms:compress collapse_whitespace="true" disable_comments="true">
 
+	<!-- Embeds anatomy functions, like 'template', 'view', 'e-text', 'e-image', etc -->
 	<cms:embed 'anatomy/funcs.html' />
 
+	<!-- Captures respective template's basename (like 'index' for 'index.php') -->
 	<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" scope = 'global' />
 
-	<!-- Overrides default template vars -->
+	<!-- In the template.php file, 'template' function is called, which really only sets
+		't_variables' for 'title', 'icon', 'clonable', etc, which the preceding Couch template
+		tag uses to build the template just below -->
 	<cms:block 'set-template' />
 
+	<!-- Uses the t_variables from the 'set-template' block just above -->
 	<cms:template title=t_title clonable=t_clonable access_level=t_access_level executable=t_executable hidden=t_hidden commentable=t_commentable order=t_order icon=t_icon routable=t_routable dynamic_folders=t_dynamic_folders folder_masterpage=t_folder_masterpage gallery=t_gallery nested_pages=t_nested_pages globals=t_globals parent=t_parent>
 
-		<!-- Editables -->
+		<!-- Editables block (called at the top, template.php level) -->
 		<cms:block 'editables'>
+
 			<cms:if t_seo>
+				<!-- If seo = '1' was set during 'template' call earlier, go ahead
+					and set the standard seo fields, likely for use with
+					config-form in just a bit -->
 				<cms:editable name='seo' type='group' order='99' label='SEO' collapsed='1'>
+
 					<cms:editable
 						name='seo_title'
 						label = 'SEO Title'
@@ -21,6 +31,7 @@
 						group = 'seo'
 						width = '400'
 					/>
+
 					<cms:editable
 						name='seo_desc'
 						label = 'SEO Description'
@@ -29,12 +40,17 @@
 						group = 'seo'
 						width = '400'
 					/>
+
 				</cms:editable>
 			</cms:if>
+
 		</cms:block>
 
-		<!-- Config list view -->
+		<!-- Config-list block (called at the top, template.php level) -->
 		<cms:block 'config-list'>
+			<!-- In the t_variables earlier, t_exclude is automatically set to 'default'
+				and can be overridden when 'template' function is called. Searchable
+				is the same, with a default value of '1' -->
 			<cms:config_list_view exclude=t_exclude searchable=t_searchable limit=t_limit>
 				<cms:field 'k_selector_checkbox' />
 				<cms:field 'k_page_title' class='title' />
@@ -45,7 +61,7 @@
 			</cms:config_list_view>
 		</cms:block>
 
-		<!-- Config form view -->
+		<!-- Config-form block (called at the top, template.php level) -->
 		<cms:block 'config-form'>
 			<cms:config_form_view>
 				<cms:if t_seo>
