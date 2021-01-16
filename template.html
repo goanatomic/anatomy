@@ -1,87 +1,87 @@
 <cms:compress collapse_whitespace="true" disable_comments="true">
 
-<cms:embed 'anatomy/funcs.html' />
+	<cms:embed 'anatomy/funcs.html' />
 
-<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" scope = 'global' />
+	<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" scope = 'global' />
 
-<!-- Overrides default template vars -->
-<cms:block 'set-template' />
+	<!-- Overrides default template vars -->
+	<cms:block 'set-template' />
 
-<cms:template title=t_title clonable=t_clonable access_level=t_access_level executable=t_executable hidden=t_hidden commentable=t_commentable order=t_order icon=t_icon routable=t_routable dynamic_folders=t_dynamic_folders folder_masterpage=t_folder_masterpage gallery=t_gallery nested_pages=t_nested_pages globals=t_globals parent=t_parent>
+	<cms:template title=t_title clonable=t_clonable access_level=t_access_level executable=t_executable hidden=t_hidden commentable=t_commentable order=t_order icon=t_icon routable=t_routable dynamic_folders=t_dynamic_folders folder_masterpage=t_folder_masterpage gallery=t_gallery nested_pages=t_nested_pages globals=t_globals parent=t_parent>
 
-	<!-- Editables -->
-	<cms:block 'editables'>
-		<cms:if t_seo>
-			<cms:editable name='seo' type='group' order='99' label='SEO' collapsed='1'>
-				<cms:editable
-					name='seo_title'
-					label = 'SEO Title'
-					type = 'text'
-					order = '0'
-					group = 'seo'
-					width = '400'
-				/>
-				<cms:editable
-					name='seo_desc'
-					label = 'SEO Description'
-					type = 'textarea'
-					order = '1'
-					group = 'seo'
-					width = '400'
-				/>
-			</cms:editable>
-		</cms:if>
-	</cms:block>
-
-	<!-- Config list view -->
-	<cms:block 'config-list'>
-		<cms:config_list_view exclude=t_exclude searchable=t_searchable limit=t_limit>
-			<cms:field 'k_selector_checkbox' />
-			<cms:field 'k_page_title' class='title' />
-			<cms:field 'k_actions' />
-			<cms:style>
-				.col-title {width: 80%;}
-			</cms:style>
-		</cms:config_list_view>
-	</cms:block>
-
-	<!-- Config form view -->
-	<cms:block 'config-form'>
-		<cms:config_form_view>
+		<!-- Editables -->
+		<cms:block 'editables'>
 			<cms:if t_seo>
-				<cms:field 'k_page_name' label='Slug' order = '2' group = 'seo' />
+				<cms:editable name='seo' type='group' order='99' label='SEO' collapsed='1'>
+					<cms:editable
+						name='seo_title'
+						label = 'SEO Title'
+						type = 'text'
+						order = '0'
+						group = 'seo'
+						width = '400'
+					/>
+					<cms:editable
+						name='seo_desc'
+						label = 'SEO Description'
+						type = 'textarea'
+						order = '1'
+						group = 'seo'
+						width = '400'
+					/>
+				</cms:editable>
 			</cms:if>
-			<cms:style>
-				#k_page_title {max-width: 400px;}
-				#k_page_name {max-width: 400px;}
-			</cms:style>
-		</cms:config_form_view>
+		</cms:block>
 
+		<!-- Config list view -->
+		<cms:block 'config-list'>
+			<cms:config_list_view exclude=t_exclude searchable=t_searchable limit=t_limit>
+				<cms:field 'k_selector_checkbox' />
+				<cms:field 'k_page_title' class='title' />
+				<cms:field 'k_actions' />
+				<cms:style>
+					.col-title {width: 80%;}
+				</cms:style>
+			</cms:config_list_view>
+		</cms:block>
+
+		<!-- Config form view -->
+		<cms:block 'config-form'>
+			<cms:config_form_view>
+				<cms:if t_seo>
+					<cms:field 'k_page_name' label='Slug' order = '2' group = 'seo' />
+				</cms:if>
+				<cms:style>
+					#k_page_title {max-width: 400px;}
+					#k_page_name {max-width: 400px;}
+				</cms:style>
+			</cms:config_form_view>
+
+		</cms:block>
+
+		<!-- Define Anatomy routes -->
+		<cms:embed 'anatomy/routes.html' />
+		<!-- Define Client routes -->
+		<cms:embed "templates/<cms:show a_template_basename />/routes.html" />
+
+	</cms:template>
+
+	<cms:block 'template-vars'>
+		<cms:if t_clonable>
+			<cms:set seo_postfix = k_template_title />
+		</cms:if>
+		<cms:set seo_title = "<cms:show seo_prefix /> | <cms:show seo_postfix />" />
 	</cms:block>
 
-	<!-- Define Anatomy routes -->
-	<cms:embed 'anatomy/routes.html' />
-	<!-- Define Client routes -->
-	<cms:embed "templates/<cms:show a_template_basename />/routes.html" />
+	<cms:block 'pre-route'>
+		<cms:embed 'anatomy/root-vars.html' />
+		<cms:embed 'client/root-vars.html' />
+	</cms:block>
 
-</cms:template>
+	<cms:match_route debug=config.route_debug />
 
-<cms:block 'template-vars'>
-	<cms:if t_clonable>
-		<cms:set seo_postfix = k_template_title />
-	</cms:if>
-	<cms:set seo_title = "<cms:show seo_prefix /> | <cms:show seo_postfix />" />
-</cms:block>
-
-<cms:block 'pre-route'>
-	<cms:embed 'anatomy/root-vars.html' />
-	<cms:embed 'client/root-vars.html' />
-</cms:block>
-
-<cms:match_route debug=config.route_debug />
-
-<cms:block 'view'>
-	<cms:embed "templates/<cms:show a_template_basename />/views/<cms:show k_matched_route />.html" />
-</cms:block>
+	<cms:block 'view'>
+		<cms:embed "templates/<cms:show a_template_basename />/views/<cms:show k_matched_route />.html" />
+	</cms:block>
 
 </cms:compress>
