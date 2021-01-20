@@ -33,30 +33,50 @@
 		</cms:if>
 	</cms:block>
 
+
 	<!-- Config list view -->
-	<cms:block 'config-list'>
-		<cms:config_list_view exclude=t_exclude searchable=t_searchable limit=t_limit>
-			<cms:field 'k_selector_checkbox' />
-			<cms:field 'k_page_title' class='title' />
-			<cms:field 'k_actions' />
+	<cms:config_list_view exclude=t_exclude searchable=t_searchable limit=t_limit>
+
+		<cms:block 'config-list'>
+
+			<cms:block 'config-list-fields'>
+				<cms:field 'k_selector_checkbox' />
+				<cms:field 'k_page_title' class='title' />
+				<cms:field 'k_actions' />
+			</cms:block>
+
 			<cms:style>
-				.col-title {width: 80%;}
+				<cms:block 'config-list-style'>
+					.col-title {width: 80%;}
+				</cms:block>
 			</cms:style>
-		</cms:config_list_view>
-	</cms:block>
+
+		</cms:block>
+
+	</cms:config_list_view>
+
 
 	<!-- Config form view -->
-	<cms:block 'config-form'>
-		<cms:config_form_view>
-			<cms:if t_seo>
-				<cms:field 'k_page_name' label='Slug' order = '2' group = 'seo' />
-			</cms:if>
-			<cms:style>
-				#k_page_title {max-width: 400px;}
-				#k_page_name {max-width: 400px;}
-			</cms:style>
-		</cms:config_form_view>
-	</cms:block>
+	<cms:config_form_view>
+
+		<cms:block 'config-form'>
+
+			<cms:block 'config-form-fields'>
+				<cms:if t_seo>
+					<cms:field 'k_page_name' label='Slug' order = '2' group = 'seo' />
+				</cms:if>
+			</cms:block>
+
+			<cms:block 'config-list-style'>
+				<cms:style>
+					#k_page_title {max-width: 400px;}
+					#k_page_name {max-width: 400px;}
+				</cms:style>
+			</cms:block>
+
+		</cms:block>
+
+	</cms:config_form_view>
 
 	<!-- Routes -->
 	<cms:block 'routes'>
