@@ -1,101 +1,119 @@
 <cms:compress collapse_whitespace="true" disable_comments="true">
 
-<cms:embed 'anatomy/funcs.html' />
+	<!-- Embeds anatomy functions, like 'template', 'view', 'e-text', 'e-image', etc -->
+	<cms:embed 'anatomy/funcs.html' />
 
-<!-- Overrides default template vars -->
-<cms:block 'set-template' />
+	<!-- Captures respective template's basename (like 'index' for 'index.php') -->
+	<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" scope = 'global' />
 
-<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" scope = 'global' />
+	<!-- In the template.php file, 'template' function is called, which really only sets
+		't_variables' for 'title', 'icon', 'clonable', etc, which the preceding Couch template
+		tag uses to build the template just below -->
+	<cms:block 'set-template' />
 
-<cms:template title=t_title clonable=t_clonable access_level=t_access_level executable=t_executable hidden=t_hidden commentable=t_commentable order=t_order icon=t_icon routable=t_routable dynamic_folders=t_dynamic_folders folder_masterpage=t_folder_masterpage gallery=t_gallery nested_pages=t_nested_pages globals=t_globals parent=t_parent>
+	<!-- Uses the t_variables from the 'set-template' block just above -->
+	<cms:template title=t_title clonable=t_clonable access_level=t_access_level executable=t_executable hidden=t_hidden commentable=t_commentable order=t_order icon=t_icon routable=t_routable dynamic_folders=t_dynamic_folders folder_masterpage=t_folder_masterpage gallery=t_gallery nested_pages=t_nested_pages globals=t_globals parent=t_parent>
 
-	<!-- Editables -->
-	<cms:block 'editables'>
-		<cms:if t_seo>
-			<cms:editable name='seo' type='group' order='99' label='SEO' collapsed='1'>
-				<cms:editable
-					name='seo_title'
-					label = 'SEO Title'
-					type = 'text'
-					order = '0'
-					group = 'seo'
-					width = '400'
-				/>
-				<cms:editable
-					name='seo_desc'
-					label = 'SEO Description'
-					type = 'textarea'
-					order = '1'
-					group = 'seo'
-					width = '400'
-				/>
-			</cms:editable>
-		</cms:if>
-	</cms:block>
+		<!-- Editables block (called at the top, template.php level) -->
+		<cms:block 'editables'>
 
+			<cms:if t_seo>
+				<!-- If seo = '1' was set during 'template' call earlier, go ahead
+					and set the standard seo fields, likely for use with
+					config-form in just a bit -->
+				<cms:editable name='seo' type='group' order='99' label='SEO' collapsed='1'>
 
-	<!-- Config list view -->
-	<cms:config_list_view exclude=t_exclude searchable=t_searchable limit=t_limit>
+					<cms:editable
+						name='seo_title'
+						label = 'SEO Title'
+						type = 'text'
+						order = '0'
+						group = 'seo'
+						width = '400'
+					/>
 
-		<cms:block 'config-list'>
+					<cms:editable
+						name='seo_desc'
+						label = 'SEO Description'
+						type = 'textarea'
+						order = '1'
+						group = 'seo'
+						width = '400'
+					/>
 
-			<cms:block 'config-list-fields'>
-				<cms:field 'k_selector_checkbox' />
-				<cms:field 'k_page_title' class='title' />
-				<cms:field 'k_actions' />
-			</cms:block>
+				</cms:editable>
+			</cms:if>
 
-			<cms:style>
-				<cms:block 'config-list-style'>
-					.col-title {width: 80%;}
+		</cms:block>
+
+		<!-- Config-list block (called at the top, template.php level) -->
+		<cms:config_list_view exclude=t_exclude searchable=t_searchable limit=t_limit>
+			<!-- In the t_variables earlier, t_exclude is automatically set to 'default'
+				and can be overridden when 'template' function is called. Searchable
+				is the same, with a default value of '1' -->
+			<cms:block 'config-list'>
+
+				<cms:block 'config-list-fields'>
+					<cms:field 'k_selector_checkbox' />
+					<cms:field 'k_page_title' class='title' />
+					<cms:field 'k_actions' />
 				</cms:block>
-			</cms:style>
 
-		</cms:block>
+				<cms:block 'config-list-style'>
+					<cms:style>
+						.col-title {width: 80%;}
+					</cms:style>
+				</cms:block>
 
-	</cms:config_list_view>
-
-
-	<!-- Config form view -->
-	<cms:config_form_view>
-
-		<cms:block 'config-form'>
-
-			<cms:block 'config-form-fields'>
-				<cms:if t_seo>
-					<cms:field 'k_page_name' label='Slug' order = '2' group = 'seo' />
-				</cms:if>
 			</cms:block>
 
-			<cms:block 'config-list-style'>
-				<cms:style>
-					#k_page_title {max-width: 400px;}
-					#k_page_name {max-width: 400px;}
-				</cms:style>
+		</cms:config_list_view>
+
+		<!-- Config-form block (called at the top, template.php level) -->
+		<cms:config_form_view>
+
+			<cms:block 'config-form'>
+
+				<cms:block 'config-list-fields'>
+					<cms:if t_seo>
+						<cms:field 'k_page_name' label='Slug' order = '2' group = 'seo' />
+					</cms:if>
+				</cms:block>
+
+				<cms:block 'config-list-style'>
+					<cms:style>
+						#k_page_title {max-width: 400px;}
+						#k_page_name {max-width: 400px;}
+					</cms:style>
+				</cms:block>
+
 			</cms:block>
 
-		</cms:block>
+		</cms:config_form_view>
 
-	</cms:config_form_view>
-
-	<!-- Routes -->
-	<cms:block 'routes'>
+		<!-- Define Anatomy routes -->
+		<cms:embed 'anatomy/routes.html' />
+		<!-- Define Client routes -->
 		<cms:embed "templates/<cms:show a_template_basename />/routes.html" />
+
+	</cms:template>
+
+	<cms:block 'template-vars'>
+		<cms:if t_clonable>
+			<cms:set seo_postfix = k_template_title />
+		</cms:if>
+		<cms:set seo_title = "<cms:show seo_prefix /> | <cms:show seo_postfix />" />
 	</cms:block>
 
-</cms:template>
+	<cms:block 'pre-route'>
+		<cms:embed 'anatomy/root-vars.html' />
+		<cms:embed 'client/root-vars.html' />
+	</cms:block>
 
-<cms:block 'template-vars'>
-	<cms:if t_clonable>
-		<cms:set seo_postfix = k_template_title />
-	</cms:if>
-	<cms:set seo_title = "<cms:show seo_prefix /> | <cms:show seo_postfix />" />
-</cms:block>
+	<cms:match_route debug=config.route_debug />
 
-<cms:match_route debug=a_debug />
-
-<cms:block 'view'>
-	<cms:embed "templates/<cms:show a_template_basename />/views/<cms:show k_matched_route />.html" />
-</cms:block>
+	<cms:block 'view'>
+		<cms:embed "templates/<cms:show a_template_basename />/views/<cms:show k_matched_route />.html" />
+	</cms:block>
 
 </cms:compress>
