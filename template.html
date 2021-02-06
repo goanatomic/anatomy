@@ -1,4 +1,4 @@
-
+<cms:compress collapse_whitespace="true" disable_comments="true">
 
 	<cms:capture into="config" is_json='1'>
 		<cms:php>echo(file_get_contents ('./couchconfig.json'));</cms:php>
@@ -119,3 +119,5 @@
 	<cms:block 'view'>
 		<cms:embed "templates/<cms:show a_template_basename />/views/<cms:show k_matched_route />.html" />
 	</cms:block>
+
+</cms:compress>
