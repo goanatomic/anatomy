@@ -1,8 +1,8 @@
-<cms:capture into="config" is_json='1'>
-	<cms:php>echo(file_get_contents ('./couchconfig.json'));</cms:php>
-</cms:capture>
-
 <cms:compress collapse_whitespace="true" disable_comments="true">
+
+	<cms:capture into="config" is_json='1'>
+		<cms:php>echo(file_get_contents ('./couchconfig.json'));</cms:php>
+	</cms:capture>
 
 	<!-- Embeds anatomy functions, like 'template', 'view', 'e-text', 'e-image', etc -->
 	<cms:embed 'anatomy/funcs.html' />
