@@ -6,6 +6,7 @@
 
 	<!-- Embeds anatomy functions, like 'template', 'view', 'e-text', 'e-image', etc -->
 	<cms:embed 'anatomy/funcs.html' />
+	<cms:embed 'client/funcs.html' />
 
 	<!-- Captures respective template's basename (like 'index' for 'index.php') -->
 	<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" scope = 'global' />
