@@ -37,6 +37,10 @@
 	<cms:set a_site_desc = site_desc scope = 'global' />
 	<cms:set a_favicon = "<cms:thumbnail favicon width='42' height='42' quality='80' />" scope = 'global' />
 	<cms:set a_logo = "<cms:thumbnail logo width='500' quality='80' />" scope = 'global' />
+	<!-- Check if seo_title is filled out -->
+	<cms:if "<cms:not prepend_seo />">
+		<cms:set seo_title = "<cms:show a_site_name /> | <cms:show a_site_desc />" scope='global' />
+	</cms:if>
 </cms:pages>
 
 <cms:set s_lang = "EN" scope = 'global' />

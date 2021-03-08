@@ -1,0 +1,4 @@
+<cms:if t_clonable>
+	<cms:set append_seo = k_template_title scope = 'global' />
+</cms:if>
+<cms:set seo_title = "<cms:show prepend_seo /> | <cms:show append_seo />" />

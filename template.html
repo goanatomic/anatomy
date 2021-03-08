@@ -103,13 +103,6 @@
 
 	</cms:template>
 
-	<cms:block 'template-vars'>
-		<cms:if t_clonable>
-			<cms:set seo_postfix = k_template_title />
-		</cms:if>
-		<cms:set seo_title = "<cms:show seo_prefix /> | <cms:show seo_postfix />" />
-	</cms:block>
-
 	<cms:block 'pre-route'>
 		<cms:embed 'anatomy/root-vars.html' />
 		<cms:embed 'client/root-vars.html' />
