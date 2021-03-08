@@ -1,64 +1,72 @@
-<head>
+<!-- Web fonts -->
+<cms:block 'web-fonts'>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+</cms:block>
 
-	<!-- Web Fonts -->
-	<cms:block 'web-fonts'>
-		<link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+<!-- Favicons -->
+<cms:block 'icons'>
+	<link rel="icon" type="image/png" href="<cms:show a_favicon />" />
+	<link rel="apple-touch-icon" href="<cms:show a_favicon />" />
+</cms:block>
+
+<cms:block 'external' />
+
+<!-- Meta tags -->
+<cms:block 'meta'>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title><cms:show seo_title /></title>
+	<meta name="description" content="<cms:show seo_desc />"/>
+	<meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+	<link rel="canonical" href="<cms:show k_site_url />" />
+</cms:block>
+
+<!-- Open Graph -->
+<cms:block 'open-graph'>
+	<meta property="og:locale" content="<cms:show og_locale />" />
+	<meta property="og:type" content="<cms:show og_type />" />
+	<meta property="og:title" content="<cms:show seo_title />" />
+	<meta property="og:description" content="<cms:show seo_desc />" />
+	<meta property="og:url" content="<cms:show k_site_url />" />
+	<meta property="og:site_name" content="<cms:show site_name />" />
+	<meta property="og:image" content="<cms:show site_image />" />
+</cms:block>
+
+<cms:block 'twitter-card'>
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:description" content="<cms:show seo_desc />" />
+	<meta name="twitter:title" content="<cms:show seo_title />" />
+	<meta name="twitter:site" content="<cms:show twitter_handle />" />
+	<meta name="twitter:image" content="<cms:show site_image />" />
+	<meta name="twitter:creator" content="<cms:show twitter_handle />" />
+</cms:block>
+
+<cms:block 'ha-js'>
+	<script type='text/javascript'>
+		<cms:embed 'anatomy/js/anatomy-head.js' />
+	</script>
+</cms:block>
+
+<!-- CSS -->
+<cms:block 'css-link'>
+	<cms:minify 'css' into=s_css_path>
+		embed/anatomy/css/vars.css
+		embed/anatomy/css/typography.css
+		embed/anatomy/css/base.css
+		embed/anatomy/css/layout.css
+		embed/anatomy/css/modules.css
+		assets/css/vars.css
+		assets/css/typography.css
+		assets/css/base.css
+		assets/css/layout.css
+		assets/css/modules.css
+	</cms:minify>
+</cms:block>
+
+<!-- Style with access to Couch vars -->
+<style>
+	<cms:block 't-css'>
+		<cms:embed "templates/<cms:show a_template_basename />/<cms:show a_template_basename />.css" />
 	</cms:block>
-
-	<!-- Favicons -->
-	<cms:block 'icons'>
-		<link rel="icon" type="image/png" href="<cms:show a_favicon />" />
-		<link rel="apple-touch-icon" href="<cms:show a_favicon />" />
-	</cms:block>
-
-	<cms:block 'external' />
-
-	<cms:block 'meta'>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title><cms:show seo_title /></title>
-		<meta name="description" content="<cms:show seo_desc />"/>
-		<meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
-		<link rel="canonical" href="<cms:show k_site_url />" />
-	</cms:block>
-
-	<cms:block 'open-graph'>
-		<meta property="og:locale" content="<cms:show og_locale />" />
-		<meta property="og:type" content="<cms:show og_type />" />
-		<meta property="og:title" content="<cms:show seo_title />" />
-		<meta property="og:description" content="<cms:show seo_desc />" />
-		<meta property="og:url" content="<cms:show k_site_url />" />
-		<meta property="og:site_name" content="<cms:show site_name />" />
-		<meta property="og:image" content="<cms:show site_image />" />
-	</cms:block>
-	
-	<cms:block 'twitter-card'>
-		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:description" content="<cms:show seo_desc />" />
-		<meta name="twitter:title" content="<cms:show seo_title />" />
-		<meta name="twitter:site" content="<cms:show twitter_handle />" />
-		<meta name="twitter:image" content="<cms:show site_image />" />
-		<meta name="twitter:creator" content="<cms:show twitter_handle />" />
-	</cms:block>
-
-	<!-- Initializes the CSS Element -->
-	<cms:block 'style'>
-		<meta name='hello'>
-		<cms:minify 'css' into='hello.css'>
-			<cms:show k_site_link />assets/css/vars.css
-			<cms:show k_site_link />assets/css/typography.css
-			<cms:show k_site_link />assets/css/base.css
-			<cms:show k_site_link />assets/css/layout.css
-			<cms:show k_site_link />assets/css/modules.css
-		</cms:minify>
-	</cms:block>
-
-	<!-- Head style tag, callable from layout -->
-	<style>
-		<cms:block 't-css'>
-			<cms:embed "templates/<cms:show a_template_basename />/<cms:show a_template_basename />.css" />
-		</cms:block>
-		<cms:block 'v-css' />
-	</style>
-
-</head>
+	<cms:block 'v-css' />
+</style>
