@@ -251,192 +251,289 @@
 
 <cms:func 'e-mosaic-stream' type='basic' desc='The mosaic stream allows you to create multi-varied content.' label='Mosaic Stream' order='' name='mosaic_stream' not_active = ''>
 
+	<cms:if type = 'basic'>
+
+		<cms:mosaic name=name label=label order=order desc=desc not_active=not_active>
+
+		    <cms:tile name='heading' label='Heading'>
+		        <cms:editable
+		            name = 'heading'
+		            label = 'Heading'
+		            type = 'text'
+		        />
+		        <cms:config_list_view>
+		            <cms:field 'k_content'>
+		                <div style="padding: 20px;">
+		                    <h2 style="font-size: 21pt;"><cms:show heading /></h2>
+		                </div>
+		            </cms:field>
+		        </cms:config_list_view>
+		    </cms:tile>
+		    
+
+		    <cms:tile name='richtext' label='Richtext'>
+		        <cms:editable
+		            name = 'richtext'
+		            label = 'Richtext'
+		            type = 'richtext'
+		            toolbar = 'custom'
+		            custom_toolbar = 'bold,italic,underline,strike | link,unlink | bulletedlist,numberedlist | removeformat'
+		        />
+		        <cms:config_list_view>
+		            <cms:field 'k_content'>
+		                <div style="padding: 20px; max-width: 600px; font-size: 12pt; line-height: 1.6; color: #333;">
+		                    <cms:show richtext />
+		                </div>
+		            </cms:field>
+		        </cms:config_list_view>
+		    </cms:tile>
+
+		    <cms:tile name='video' label='Video'>
+		        <cms:editable
+		            name = 'video_title'
+		            label = 'Title'
+		            type = 'text'
+		        />
+		        <cms:editable
+		            name = 'video_type'
+		            label = 'Video Type'
+		            type = 'radio'
+		            opt_values = 'YouTube | Vimeo'
+		            opt_selected = 'YouTube'
+		        />
+		        <cms:editable
+		            name = 'video_id'
+		            label = 'Video ID'
+		            type = 'text'
+		        />
+		        <cms:editable
+		            name = 'video_caption'
+		            label = 'Caption'
+		            type = 'text'
+		        />
+		        <cms:config_list_view>
+		            <cms:field 'k_content' >
+		                <div style="padding: 20px;font-size: 12pt; line-height: 1.6; color: #333;">
+		                    <h3><cms:show video_title /></h3>
+		                    <br />
+		                    <cms:if video_type = 'YouTube'>
+		                        <iframe width="350" height="196" src="https://www.youtube-nocookie.com/embed/<cms:show video_id />?controls=0" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		                    <cms:else />
+		                        <div style="width: 350px;">
+		                            <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/<cms:show video_id />?title=0&byline=0&portrait=0&dnt=0&" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+		                        </div>
+		                    </cms:if>
+		                    <br />
+		                    <p><cms:show video_caption /></p>
+		                </div>
+		            </cms:field>
+		        </cms:config_list_view>
+		    </cms:tile>
+
+		    <cms:tile name='image' label='Image'>
+		        <cms:editable
+		            name = 'image'
+		            label = 'Image'
+		            type = 'image'
+		            show_preview = '1'
+		            preview_height = '100'
+		            quality = '100'
+		            enforce_max = '1'
+		            width = '1600'
+		            height = '1600'
+		        />
+		        <cms:editable
+		            name = 'caption'
+		            label = 'Caption'
+		            type = 'text'
+		        />
+		        <cms:config_list_view>
+		            <cms:field 'k_content'>
+		                <div style="padding: 20px;font-size: 12pt; line-height: 1.6; color: #333;">
+		                    <div><img src="<cms:thumbnail image width='800' />" style="width: 300px;"></div>
+		                    <br />
+		                    <p><cms:show caption /></p>
+		                </div>
+		            </cms:field>
+		        </cms:config_list_view>
+		    </cms:tile>
+
+		    <cms:tile name='audio' label='Audio'>
+		        <cms:editable
+		            name = 'audio_file'
+		            label = 'Audio file'
+		            type = 'file'
+		        />
+		        <cms:editable
+		            name = 'caption'
+		            label = 'Caption'
+		            type = 'text'
+		        />
+		        <cms:config_list_view>
+		            <cms:field 'k_content'>
+		                <div style='padding: 20px;font-size: 12pt; line-height: 1.6; color: #333;'>
+		                    <div>
+		                        <audio controls>
+		                            <source src="<cms:show audio_file />" type="audio/mpeg">
+		                        </audio>
+		                    </div>
+		                    <br />
+		                    <strong><cms:show caption /></strong>
+		                </div>
+		            </cms:field>
+		        </cms:config_list_view>
+		    </cms:tile>
+
+		    <cms:tile name='link' label='Link'>
+		        <cms:editable
+		            name = 'button_type'
+		            label = 'Button type'
+		            type = 'radio'
+		            opt_values = 'URL | File'
+		        />
+		        <cms:func _into='doc_cond' button_type=''>
+		            <cms:if button_type = 'File'>show<cms:else />hide</cms:if>
+		        </cms:func>
+		        <cms:func _into='link_cond' button_type=''>
+		            <cms:if button_type = 'URL'>show<cms:else />hide</cms:if>
+		        </cms:func>
+		        <cms:editable
+		            name = 'button_file'
+		            label = 'File'
+		            type = 'file'
+		            not_active = doc_cond
+		        />
+		        <cms:editable
+		            name = 'button_url'
+		            label = 'URL'
+		            type = 'text'
+		            not_active = link_cond
+		        />
+		        <cms:editable
+		            name = 'button_text'
+		            label = 'Button text'
+		            type = 'text'
+		        />
+		        <cms:config_list_view>
+		            <cms:field 'k_content'>
+		                <div style='padding: 20px;'>
+		                    <style>a {color: inherit;} a:hover {text-decoration: none; color: inherit;}</style>
+		                    <a href="<cms:if link_type = 'File'><cms:show link_file /><cms:else /><cms:show link_link /></cms:if>" target="_blank" style="display: inline-block; padding: 10px 20px; text-transform: uppercase; text-align: center; border: 1px solid #aaa;"><cms:show button_text /></a>
+		                </div>
+		            </cms:field>
+		        </cms:config_list_view>
+		    </cms:tile>
+
+		</cms:mosaic>
+
+	<cms:else_if type = 'minimal' />
+
 	<cms:mosaic name=name label=label order=order desc=desc not_active=not_active>
 
-	    <cms:tile name='heading' label='Heading'>
-	        <cms:editable
-	            name = 'heading'
-	            label = 'Heading'
-	            type = 'text'
-	        />
-	        <cms:config_list_view>
-	            <cms:field 'k_content'>
-	                <div style="padding: 20px;">
-	                    <h2 style="font-size: 21pt;"><cms:show heading /></h2>
-	                </div>
-	            </cms:field>
-	        </cms:config_list_view>
-	    </cms:tile>
+		    <cms:tile name='heading' label='Heading'>
+		        <cms:editable
+		            name = 'heading'
+		            label = 'Heading'
+		            type = 'text'
+		        />
+		        <cms:config_list_view>
+		            <cms:field 'k_content'>
+		                <div style="padding: 20px;">
+		                    <h2 style="font-size: 21pt;"><cms:show heading /></h2>
+		                </div>
+		            </cms:field>
+		        </cms:config_list_view>
+		    </cms:tile>
 
-	    <cms:tile name='text' label='Text'>
-	        <cms:editable
-	            name = 'text'
-	            label = 'Text'
-	            type = 'text'
-	        />
-	        <cms:config_list_view>
-	            <cms:field 'k_content'>
-	                <div style="padding: 20px; max-width: 600px; font-size: 12pt; line-height: 1.6; color: #333;">
-	                    <p><cms:show text /></p>
-	                </div>
-	            </cms:field>
-	        </cms:config_list_view>
-	    </cms:tile>
+		    <cms:tile name='text' label='Text'>
+		        <cms:editable
+		            name = 'text'
+		            label = 'Text'
+		            type = 'text'
+		        />
+		        <cms:config_list_view>
+		            <cms:field 'k_content'>
+		                <div style="padding: 20px; max-width: 600px; font-size: 12pt; line-height: 1.6; color: #333;">
+		                    <p><cms:show text /></p>
+		                </div>
+		            </cms:field>
+		        </cms:config_list_view>
+		    </cms:tile>
 
-	    <cms:tile name='richtext' label='Richtext'>
-	        <cms:editable
-	            name = 'richtext'
-	            label = 'Richtext'
-	            type = 'richtext'
-	            toolbar = 'custom'
-	            custom_toolbar = 'bold,italic,underline,strike | link,unlink | bulletedlist,numberedlist | removeformat'
-	        />
-	        <cms:config_list_view>
-	            <cms:field 'k_content'>
-	                <div style="padding: 20px; max-width: 600px; font-size: 12pt; line-height: 1.6; color: #333;">
-	                    <cms:show richtext />
-	                </div>
-	            </cms:field>
-	        </cms:config_list_view>
-	    </cms:tile>
+		    <cms:tile name='richtext' label='Richtext'>
+		        <cms:editable
+		            name = 'richtext'
+		            label = 'Richtext'
+		            type = 'richtext'
+		            toolbar = 'custom'
+		            custom_toolbar = 'bold,italic,underline,strike | link,unlink | bulletedlist,numberedlist | removeformat'
+		        />
+		        <cms:config_list_view>
+		            <cms:field 'k_content'>
+		                <div style="padding: 20px; max-width: 600px; font-size: 12pt; line-height: 1.6; color: #333;">
+		                    <cms:show richtext />
+		                </div>
+		            </cms:field>
+		        </cms:config_list_view>
+		    </cms:tile>
 
-	    <cms:tile name='video' label='Video'>
-	        <cms:editable
-	            name = 'video_title'
-	            label = 'Title'
-	            type = 'text'
-	        />
-	        <cms:editable
-	            name = 'video_type'
-	            label = 'Video Type'
-	            type = 'radio'
-	            opt_values = 'YouTube | Vimeo'
-	            opt_selected = 'YouTube'
-	        />
-	        <cms:editable
-	            name = 'video_id'
-	            label = 'Video ID'
-	            type = 'text'
-	        />
-	        <cms:editable
-	            name = 'video_caption'
-	            label = 'Caption'
-	            type = 'text'
-	        />
-	        <cms:config_list_view>
-	            <cms:field 'k_content' >
-	                <div style="padding: 20px;font-size: 12pt; line-height: 1.6; color: #333;">
-	                    <h3><cms:show video_title /></h3>
-	                    <br />
-	                    <cms:if video_type = 'YouTube'>
-	                        <iframe width="350" height="196" src="https://www.youtube-nocookie.com/embed/<cms:show video_id />?controls=0" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-	                    <cms:else />
-	                        <div style="width: 350px;">
-	                            <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/<cms:show video_id />?title=0&byline=0&portrait=0&dnt=0&" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
-	                        </div>
-	                    </cms:if>
-	                    <br />
-	                    <p><cms:show video_caption /></p>
-	                </div>
-	            </cms:field>
-	        </cms:config_list_view>
-	    </cms:tile>
+		    <cms:tile name='image' label='Image'>
+		        <cms:editable
+		            name = 'image'
+		            label = 'Image'
+		            type = 'image'
+		            show_preview = '1'
+		            preview_height = '100'
+		            quality = '100'
+		            enforce_max = '1'
+		            width = '1600'
+		            height = '1600'
+		        />
+		        <cms:editable
+		            name = 'caption'
+		            label = 'Caption'
+		            type = 'text'
+		        />
+		        <cms:config_list_view>
+		            <cms:field 'k_content'>
+		                <div style="padding: 20px;font-size: 12pt; line-height: 1.6; color: #333;">
+		                    <div><img src="<cms:thumbnail image width='800' />" style="width: 300px;"></div>
+		                    <br />
+		                    <p><cms:show caption /></p>
+		                </div>
+		            </cms:field>
+		        </cms:config_list_view>
+		    </cms:tile>
 
-	    <cms:tile name='image' label='Image'>
-	        <cms:editable
-	            name = 'image'
-	            label = 'Image'
-	            type = 'image'
-	            show_preview = '1'
-	            preview_height = '100'
-	            quality = '100'
-	            enforce_max = '1'
-	            width = '1600'
-	            height = '1600'
-	        />
-	        <cms:editable
-	            name = 'caption'
-	            label = 'Caption'
-	            type = 'text'
-	        />
-	        <cms:config_list_view>
-	            <cms:field 'k_content'>
-	                <div style="padding: 20px;font-size: 12pt; line-height: 1.6; color: #333;">
-	                    <div><img src="<cms:thumbnail image width='800' />" style="width: 300px;"></div>
-	                    <br />
-	                    <p><cms:show caption /></p>
-	                </div>
-	            </cms:field>
-	        </cms:config_list_view>
-	    </cms:tile>
+		    <cms:tile name='audio' label='Audio'>
+		        <cms:editable
+		            name = 'audio_file'
+		            label = 'Audio file'
+		            type = 'file'
+		        />
+		        <cms:editable
+		            name = 'caption'
+		            label = 'Caption'
+		            type = 'text'
+		        />
+		        <cms:config_list_view>
+		            <cms:field 'k_content'>
+		                <div style='padding: 20px;font-size: 12pt; line-height: 1.6; color: #333;'>
+		                    <div>
+		                        <audio controls>
+		                            <source src="<cms:show audio_file />" type="audio/mpeg">
+		                        </audio>
+		                    </div>
+		                    <br />
+		                    <strong><cms:show caption /></strong>
+		                </div>
+		            </cms:field>
+		        </cms:config_list_view>
+		    </cms:tile>
 
-	    <cms:tile name='audio' label='Audio'>
-	        <cms:editable
-	            name = 'audio_file'
-	            label = 'Audio file'
-	            type = 'file'
-	        />
-	        <cms:editable
-	            name = 'caption'
-	            label = 'Caption'
-	            type = 'text'
-	        />
-	        <cms:config_list_view>
-	            <cms:field 'k_content'>
-	                <div style='padding: 20px;font-size: 12pt; line-height: 1.6; color: #333;'>
-	                    <div>
-	                        <audio controls>
-	                            <source src="<cms:show audio_file />" type="audio/mpeg">
-	                        </audio>
-	                    </div>
-	                    <br />
-	                    <strong><cms:show caption /></strong>
-	                </div>
-	            </cms:field>
-	        </cms:config_list_view>
-	    </cms:tile>
+		</cms:mosaic>
 
-	    <cms:tile name='link' label='Link'>
-	        <cms:editable
-	            name = 'button_type'
-	            label = 'Button type'
-	            type = 'radio'
-	            opt_values = 'URL | File'
-	        />
-	        <cms:func _into='doc_cond' button_type=''>
-	            <cms:if button_type = 'File'>show<cms:else />hide</cms:if>
-	        </cms:func>
-	        <cms:func _into='link_cond' button_type=''>
-	            <cms:if button_type = 'URL'>show<cms:else />hide</cms:if>
-	        </cms:func>
-	        <cms:editable
-	            name = 'button_file'
-	            label = 'File'
-	            type = 'file'
-	            not_active = doc_cond
-	        />
-	        <cms:editable
-	            name = 'button_url'
-	            label = 'URL'
-	            type = 'text'
-	            not_active = link_cond
-	        />
-	        <cms:editable
-	            name = 'button_text'
-	            label = 'Button text'
-	            type = 'text'
-	        />
-	        <cms:config_list_view>
-	            <cms:field 'k_content'>
-	                <div style='padding: 20px;'>
-	                    <style>a {color: inherit;} a:hover {text-decoration: none; color: inherit;}</style>
-	                    <a href="<cms:if link_type = 'File'><cms:show link_file /><cms:else /><cms:show link_link /></cms:if>" target="_blank" style="display: inline-block; padding: 10px 20px; text-transform: uppercase; text-align: center; border: 1px solid #aaa;"><cms:show button_text /></a>
-	                </div>
-	            </cms:field>
-	        </cms:config_list_view>
-	    </cms:tile>
-
-	</cms:mosaic>
+	</cms:if>
 
 </cms:func>
 

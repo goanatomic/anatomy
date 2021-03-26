@@ -9,3 +9,7 @@ h1 {font-size: 32pt;}
 h2 {font-size: 27pt;}
 h3 {font-size: 22pt;}
 h4 {font-size: 18pt;}
+
+body a {
+	color: var(--sapphire);
+}
