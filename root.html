@@ -4,38 +4,43 @@
 
 <cms:block 'pre-html'>
 
-	<!-- Pulls in core Anatomy variables -->
-	<cms:embed 'anatomy/vars.html' />
-	<cms:php>include('embed/anatomy/vars.php');</cms:php>
+	<cms:compress collapse_whitespace="true" disable_comments="true">
+		<!-- Pulls in core Anatomy variables -->
+		<cms:embed 'anatomy/vars.html' />
+		<cms:php>include('embed/anatomy/vars.php');</cms:php>
 
-	<!-- Pulls in client variables -->
-	<cms:embed 'client/vars.html' />
-	<cms:php>include('embed/client/vars.php');</cms:php>
+		<!-- Pulls in client variables -->
+		<cms:embed 'client/vars.html' />
+		<cms:php>include('embed/client/vars.php');</cms:php>
 
-	<!-- Sets user timezone -->
-	<cms:embed 'anatomy/timezone.html' />
+		<!-- Sets user timezone -->
+		<cms:embed 'anatomy/timezone.html' />
+	</cms:compress>
 
 </cms:block>
 
-<!-- Once the template has been established, the first time it's visited, this checks out the required Couch page, sets it to unpublished, and names it 'default' to hide in admin panel -->
-<cms:if t_clonable = '1'>
-	<cms:pages masterpage=k_template_name page_name='default' show_unpublished='1' order='asc' skip_custom_fields='1'>
-		<cms:no_results>
-			<cms:pages masterpage=k_template_name order='asc' limit='1' skip_custom_fields='1'>
-				<cms:db_persist
-					_masterpage = k_template_name
-					_page_id = k_page_id
-					_mode = 'edit'
-					k_publish_date = "0000-00-00 00:00:00"
-					k_page_name = 'default'
-				/>
-				<cms:redirect url=a_page_link />
-			</cms:pages>
-		</cms:no_results>
-	</cms:pages>
-</cms:if>
+<cms:compress collapse_whitespace="true" disable_comments="true">
+	<!-- Once the template has been established, the first time it's visited, this checks out the required Couch page, sets it to unpublished, and names it 'default' to hide in admin panel -->
+	<cms:if t_clonable = '1'>
+		<cms:pages masterpage=k_template_name page_name='default' show_unpublished='1' order='asc' skip_custom_fields='1'>
+			<cms:no_results>
+				<cms:pages masterpage=k_template_name order='asc' limit='1' skip_custom_fields='1'>
+					<cms:db_persist
+						_masterpage = k_template_name
+						_page_id = k_page_id
+						_mode = 'edit'
+						k_publish_date = "0000-00-00 00:00:00"
+						k_page_name = 'default'
+					/>
+					<cms:redirect url=a_page_link />
+				</cms:pages>
+			</cms:no_results>
+		</cms:pages>
+	</cms:if>
+</cms:compress>
 
 <html lang="<cms:show s_lang />" <cms:block 'html-attr' />>
+
 
 	<cms:block 'head'>
 
@@ -49,6 +54,7 @@
 
 	<cms:block 'pre-body' />
 
+
 	<body <cms:block 'body-attr' />>
 
 		<cms:block 'pre-header' />
@@ -61,25 +67,18 @@
 
 	<cms:block 'post-body' />
 
-
-	<!-- Include page scripts (with access couch vars) -->
 	<cms:block 'a-scripts'>
 		<script>
 			<cms:embed "anatomy/js/anatomy.js" />
 		</script>
 	</cms:block>
 
-
-	<!-- Include page scripts (with access couch vars) -->
 	<cms:block 't-scripts'>
 		<script>
 			<cms:embed "templates/<cms:show a_template_basename />/<cms:show a_template_basename />.js" />
 		</script>
 	</cms:block>
 
-
-	<!-- Include view scripts (with access couch vars) -->
 	<cms:block 'v-scripts' />
-
 
 </html>

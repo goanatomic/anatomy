@@ -33,10 +33,23 @@
 
 <!-- Sets site settings -->
 <cms:pages masterpage = 'settings.php'>
-	<cms:set a_site_name = site_name scope = 'global' />
+
+	<!-- Site name -->
+	<cms:if site_name>
+		<cms:set a_site_name = site_name scope = 'global' />
+	<cms:else />
+		<cms:set a_site_name = seo_title scope = 'global' />
+	</cms:if>
+
+	<!-- Site tagline -->
 	<cms:set a_site_desc = site_desc scope = 'global' />
+
+	<!-- Site favicon -->
 	<cms:set a_favicon = "<cms:thumbnail favicon width='42' height='42' quality='80' />" scope = 'global' />
+
+	<!-- Site logo -->
 	<cms:set a_logo = "<cms:thumbnail logo width='500' quality='80' />" scope = 'global' />
+	
 	<!-- Check if seo_title is filled out -->
 	<cms:if "<cms:not prepend_seo />">
 		<cms:set seo_title = "<cms:show a_site_name /> | <cms:show a_site_desc />" scope='global' />
@@ -45,7 +58,7 @@
 
 <cms:set s_lang = "en-US" scope = 'global' />
 <cms:set s_dev_mode = "0" scope = 'global' />
-<cms:set s_css_path = "<cms:show k_site_link />assets/css/0.0.2.min.css" scope = 'global' />
+<cms:set s_css_path = "<cms:show k_site_link />assets/css/0.0.1.css" scope = 'global' />
 
 <!-- Set acc_ variables -->
 <cms:if k_logged_in>
