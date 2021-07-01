@@ -35,25 +35,22 @@
 <cms:pages masterpage = 'settings.php'>
 
 	<!-- Site name -->
-	<cms:if site_name>
-		<cms:set a_site_name = site_name scope = 'global' />
-	<cms:else />
-		<cms:set a_site_name = seo_title scope = 'global' />
-	</cms:if>
+	<cms:set a.site_name=site_name scope='global' />
 
 	<!-- Site tagline -->
-	<cms:set a_site_desc = site_desc scope = 'global' />
+	<cms:set a.site_tagline=site_tagline scope='global' />
+
+	<!-- Site description -->
+	<cms:set a.site_description = site_desc scope = 'global' />
 
 	<!-- Site favicon -->
 	<cms:set a_favicon = "<cms:thumbnail favicon width='42' height='42' quality='80' />" scope = 'global' />
+	<cms:set a.favicon = "<cms:thumbnail favicon width='42' height='42' quality='80' />" />
 
 	<!-- Site logo -->
 	<cms:set a_logo = "<cms:thumbnail logo width='500' quality='80' />" scope = 'global' />
+	<cms:set a.logo = "<cms:thumbnail logo width='500' quality='80' />" scope = 'global' />
 	
-	<!-- Check if seo_title is filled out -->
-	<cms:if "<cms:not prepend_seo />">
-		<cms:set seo_title = "<cms:show a_site_name /> | <cms:show a_site_desc />" scope='global' />
-	</cms:if>
 </cms:pages>
 
 <cms:set s_lang = "en-US" scope = 'global' />
@@ -99,4 +96,21 @@
 			</cms:capture>
 		</cms:pages>
 	</cms:if>
+</cms:if>
+
+
+<!-- SEO append -->
+<cms:set a.seo_append = "<cms:if a.site_name><cms:show a.site_name /></cms:if><cms:if a.site_tagline> | <cms:show a.site_tagline /></cms:if>" />
+
+<!-- SEO title -->
+<cms:if k_matched_route = 'list'>
+	<cms:set a.seo_title = "<cms:show k_template_title /><cms:if a.seo_append> | <cms:show a.seo_append /></cms:if>" scope='global' />
+<cms:else_if k_matched_route = 'show' />
+	<cms:set a.seo_title = "<cms:get_field 'k_page_title' masterpage=k_template_name id=rt_id /> | <cms:show k_template_title /><cms:if a.seo_append> | <cms:show a.seo_append /></cms:if>" scope='global' />
+<cms:else_if k_matched_route = 'edit' />
+	<cms:set a.seo_title = "Edit | <cms:get_field 'k_page_title' masterpage=k_template_name id=rt_id /> | <cms:show k_template_title /><cms:if a.seo_append> | <cms:show a.seo_append /></cms:if>" scope='global' />
+<cms:else_if k_matched_route = 'delete' />
+	<cms:set a.seo_title = "Delete | <cms:get_field 'k_page_title' masterpage=k_template_name id=rt_id /> | <cms:show k_template_title /><cms:if a.seo_append> | <cms:show a.seo_append /></cms:if>" scope='global' />
+<cms:else_if k_matched_route = 'create' />
+	<cms:set a.seo_title = "Create | <cms:show k_template_title /><cms:if a.seo_append> | <cms:show a.seo_append /></cms:if>" scope='global' />
 </cms:if>

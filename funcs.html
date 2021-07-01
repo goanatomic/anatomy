@@ -1,3 +1,11 @@
+<!-- Establish anatomy variables -->
+<cms:capture into="a" is_json='1'>
+	{
+		"template_basename" : "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>",
+		"version" : "0.1"
+	}
+</cms:capture>
+
 <cms:func 'template' title='' clonable='' order='' icon='document' dynamic_folders='' folder_masterpage='' routable='1' debug='0' seo='' noindex='' config_list='' config_form='' exclude='default' hidden='' access_level='' gallery='' nested_pages='' globals='0' parent='' executable='' commentable='' order='0' routable='1' searchable='1' limit='40'>
 	<cms:set t_title = title scope = 'global' />
 	<cms:set t_clonable = clonable scope = 'global' />
@@ -25,15 +33,10 @@
 </cms:func>
 
 
-<!-- This is called at the beginning of some javascript if arrow functions are to be used -->
-<cms:func 'js'>if(1<2){}</cms:func>
-
-
 
 
 <cms:func 'view'>
-	<cms:set a_template_basename = "<cms:php>global $CTX; echo(basename($CTX->get('k_template_name'), '.php'));</cms:php>" />
-	<cms:embed "templates/<cms:show a_template_basename />/views/<cms:show k_matched_route />.html" />
+	<cms:embed "templates/<cms:show a.template_basename />/views/<cms:show k_matched_route />.html" />
 </cms:func>
 
 
