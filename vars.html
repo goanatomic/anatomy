@@ -55,7 +55,11 @@
 
 <cms:set s_lang = "en-US" scope = 'global' />
 <cms:set s_dev_mode = "0" scope = 'global' />
-<cms:set s_css_path = "<cms:show k_site_link />assets/css/0.0.1.css" scope = 'global' />
+<cms:set s_css_path = "<cms:show k_site_link />assets/css/v0.0.1.css" scope = 'global' />
+
+
+<!-- Development Mode -->
+<cms:set a.production_mode = "<cms:php>echo(K_PRODUCTION_MODE);</cms:php>" scope = 'global' />
 
 <!-- Set acc_ variables -->
 <cms:if k_logged_in>

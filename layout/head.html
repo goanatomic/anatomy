@@ -9,7 +9,10 @@
 	<link rel="apple-touch-icon" href="<cms:show a.favicon />" />
 </cms:block>
 
-<cms:block 'external' />
+<cms:block 'external'>
+	<!-- Vue -->
+	<script src="https://unpkg.com/vue@3.1.5<cms:if a.production_mode>/dist/vue.global.prod.js</cms:if>"></script>
+</cms:block>
 
 <!-- Meta tags -->
 <cms:block 'meta'>

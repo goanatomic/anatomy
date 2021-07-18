@@ -575,3 +575,55 @@ input[type='text'], textarea, input[type='password'] {
         color: var(--mid);
     }
 
+
+
+
+
+
+
+
+
+
+.a-login-form::part(base) {
+    max-width: 400px;
+    margin: 0 auto;
+    border: 1px solid var(--metal);
+    box-sizing: border-box;
+    padding: 40px 60px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    border-radius: 12px;
+}
+
+    .a-login-form__title {
+    }
+
+    .a-login-form__logo {
+    }
+
+    .a-login-form__email {
+        margin-top: 8px;
+    }
+
+    .a-login-form__password {
+        margin-top: 8px;
+    }
+
+        .a-login-form__password::part(label), .a-login-form__email::part(label) {
+            color: var(--graphite);
+        }
+
+    .a-login-form__lost-password {
+        margin-top: 4px;
+        font-size: 10pt;
+        color: var(--graphite);
+    }
+
+    .a-login-form__login {
+        margin-top: 24px;
+        width: 100%;
+    }
+
+    .a-login-form__register {
+        margin-top: 8px;
+        width: 100%;
+    }

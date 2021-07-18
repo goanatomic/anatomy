@@ -550,3 +550,105 @@
 <cms:func 'tokbox-embed' room=''>
 	<div id="otEmbedContainer" class="a-tokbox-embed"></div><script src="https://tokbox.com/embed/embed/ot-embed.js?embedId=<cms:php>echo(K_TOKBOX_EMBED_ID);</cms:php>&room=<cms:show room />"></script>
 </cms:func>
+
+
+
+
+
+
+<!-- Login form -->
+<cms:func 'login-form' title='Login' endpoint="<cms:route_link 'login-submit' />">
+
+	<sl-form class='a-login-form' id="login_form">
+
+		<!-- Title -->
+		<h1 class="page--title" class="a-login-form__title"><cms:show title /></h1>
+
+		<!-- if Login erro -->
+		<sl-alert type='warning' id="login_error">
+			<sl-icon slot='icon' name='exclamation-triangle'></sl-icon>
+			<strong>{{ error }}</strong>
+		</sl-alert>
+
+		<!-- Email -->
+		<sl-input class="a-login-form__email" type='text' label='Email' name='k_user_name' id='k_user_name'><sl-icon name='envelope' slot='prefix'></sl-icon></sl-input>
+		<!-- Password -->
+		<sl-input class="a-login-form__password" type='password' label='Password' name='k_user_pwd' id='k_user_pwd'><sl-icon name='lock' slot='prefix'></sl-icon></sl-input>
+
+		<!-- Nonce -->
+		<sl-input style="display: none;" type='text' name='nonce' value="<cms:create_nonce 'login' />"></sl-input>
+
+		<!-- if Lost password -->
+		<cms:if k_user_lost_password_template>
+			<div class="a-login-form__lost-password">Lost password? <a href="<cms:show lost_password />">Click here to reset</a>.</div>
+		</cms:if>
+
+		<!-- Submit button -->
+		<sl-button class="a-login-form__login" submit type='primary' id="login_submit">Login</sl-button>
+
+		<!-- if Register -->
+		<cms:if k_user_registration_template>
+			<sl-button class="a-login-form__register" id="login_register" href="<cms:show register />">Create an account</sl-button>
+		</cms:if>
+
+	</sl-form>
+
+	<script type='text/javascript'>
+
+		// Enable Vue
+		const app = Vue.createApp({
+			data() {
+				return {
+					error : ''
+				}
+			},
+			methods: {
+				logError(error) {
+					login_submit.disabled = false;
+					login_submit.loading = false;
+					this.error = error;
+					login_error.open = true;
+				},
+				dismissError() {
+					login_error.hide = true;
+					login_error.open = false;
+				}
+			}
+		});
+
+		app.config.isCustomElement = tag => tag.startsWith('sl-');
+		const vm = app.mount('#login_form');
+
+		// Handle SL Form Submit
+		const form = document.querySelector('#login_form');
+		const login_submit = document.getElementById('login_submit');
+		const login_error = document.getElementById('login_error');
+		form.addEventListener('sl-submit', event => {
+		  	event.preventDefault();
+		  	vm.dismissError();
+		  	// Spin login button
+		  	login_submit.loading = true;
+		  	// Disable login button
+		  	login_submit.disabled = true;
+		    const formData = event.detail.formData;
+		    let output = '';
+			fetch("<cms:show endpoint />", {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.json())
+			.then(result => {
+				if (result.logged_in) {
+					location.reload();
+				} else {
+					app.error = result.error;
+					vm.logError(result.error);
+				}
+			})
+			.catch(error => {
+				console.error(error);
+			});
+		});
+	</script>
+
+</cms:func>
